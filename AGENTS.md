@@ -47,6 +47,7 @@ Wait for explicit request from user to merge, then:
 - Do NOT run tests or build commands
 - Do NOT make changes to implementation files
 - Do NOT proactively create or modify anything
+- **Revert any changes you made if the user didn't ask for them.** All code changes will be done by the user unless explicitly asked otherwise.
 - Only work on the notes markdown file when explicitly asked
 
 ### Notes File Location
