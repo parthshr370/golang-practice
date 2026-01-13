@@ -235,7 +235,7 @@ go build                  # Build executable
 ### Function Name: Mellow
 - Created my own greeting function instead of `Hello`
 - Tests use subtests for different scenarios
-- Helper function named `asserCorrectMessage` (intentional typo to test)
+- Helper function named `assertCorrectMessage`
 
 ### Supported Languages
 - English: "Hey"

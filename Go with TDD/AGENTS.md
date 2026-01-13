@@ -41,6 +41,55 @@ Wait for explicit request from user to merge, then:
 - Use markdown formatting extensively (headings, bullets, code blocks, etc.)
 - Keep it conversational and easy to read
 
+### Devlog Style (The Discovery Log)
+
+When asked to draft or update a devlog, follow the "Discovery Log" pattern rather than a "Tutorial Summary":
+
+1. **Focus on Internals:** Emphasize the underlying mechanics (e.g., "internals of context package", "internals of Time package").
+2. **Include Research/Philosophy:** Mention the "Why" and the ideas behind the tools (e.g., "how the context package was built and the ideas that it displays").
+3. **Connect to Systems:** Link lessons to wider engineering concepts (e.g., "how to build a DB in Go").
+4. **No Redundancy:** Do not repeat basic TDD steps (writing tests, refactoring) or points about a module already defined.
+5. **Dead Simple Phrasing:** Use direct, low-friction language: "A bit on...", "Deep dive into...", "Internals of...".
+6. **Focus on "Aha!" Moments:** Only log high-value technical discoveries and surrounding research.
+
+### ASCII Charts and Visualizations
+
+When explaining complex concepts, use ASCII diagrams to make them clearer. Keep it simple and focused on the specific concept.
+
+**Use for:**
+
+- Data structures (show fields, memory layout)
+- Process flows (goroutines, locking sequences)
+- Comparisons (before/after, different approaches)
+
+**Example - showing data race:**
+
+```
+Original Counter                    Copied Counter
+┌────────────────────┐             ┌────────────────────┐
+│ mu  [LOCKED]       │  COPY  ──►  │ mu  [LOCKED]       │
+│ value: 5           │             │ value: 5           │
+└────────────────────┘             └────────────────────┘
+```
+
+**Example - happens-before:**
+
+```
+Goroutine A:                               Goroutine B:
+
+  mu.Lock()        ◄───── happens-before ──────►  mu.Lock() waits
+     │                                          │
+     ▼                                          ▼
+  work2()                                   (blocked)
+```
+
+**Keep diagrams:**
+
+- Simple and readable
+- Focused on one concept
+- Properly aligned
+- Not overwhelming
+
 ### What NOT to Do
 
 - Do NOT edit code files
@@ -53,6 +102,7 @@ Wait for explicit request from user to merge, then:
 ### Notes File Location
 
 Each module/folder has its own notes file:
+
 - `helloWorld/GO_LEARNING_LOG.md`
 - `integers/notes.md`
 - `iteration/` (notes to be created when chapter is done)
