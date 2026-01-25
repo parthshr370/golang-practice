@@ -2,6 +2,7 @@ package agent
 
 import (
 	"context"
+	"fmt"
 	"my_agent/llm"
 )
 
@@ -63,5 +64,38 @@ func WithMaxRetries(n int) Option {
 }
 
 func (a *Agent) Run(ctx context.Context, usrMsg string) (string, error) {
+
+	if usrMsg != "" {
+
+		userMessage := llm.Message{Role: "user", Content: usrMsg}
+		a.History = append(a.History, userMessage)
+
+	}
+	// prepare the request
+	req := llm.ChatRequest{
+
+		Model:       a.Model,
+		Messages:    a.History,
+		Temperature: 0.7, // for now its hardcoded
+	}
+
+	resp, err := a.client.CreateChat(ctx, req)
+	// basic err handling
+	if err != nil {
+		return "", fmt.Errorf("LLM call failed: %w", err)
+	}
+	// also check for resp.choices just to make sure
+	if len(resp.Choices) == 0 {
+		return "", fmt.Errorf("No other choice given")
+
+	}
+	// extract the output and put it in var
+	assistantContent := resp.Choices[0].Message.Content
+
+	assistantMessage := llm.Message{Role: "assistant", Content: assistantContent}
+	// obviously update the history
+	a.History = append(a.History, assistantMessage)
+	// return the thing assistant spat out or just nil
+	return assistantContent, nil
 
 }
