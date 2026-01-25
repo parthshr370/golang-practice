@@ -1,0 +1,6 @@
+tasks:
+  - init: go get -v -t -d ./...
+    command: tinygo run -target=gameboy-advance gopher.go
+vscode:
+  extensions:
+    - golang.go

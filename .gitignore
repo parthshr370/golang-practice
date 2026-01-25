@@ -1,0 +1,65 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.coverprofile
+coverage.out
+coverage.html
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Dependency directories
+vendor/
+
+# Build output directories
+bin/
+build/
+dist/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Desktop environment files
+.directory
+.Trash-*
+
+# Log files
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Environment variables containing secrets
+.env
+.env.local
+.env.*.local
+
+# Sensitive data files (API responses, cached data)
+response.json
+*.cached
+
+# OS specific
+Thumbs.db
+.DS_Store
+
+# Debug files
+debug
+__debug_bin
