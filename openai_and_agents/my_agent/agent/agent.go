@@ -42,7 +42,7 @@ func New(client *llm.Client, model string, opts ...Option) *Agent {
 
 	// Init History with System Prompt if present
 	if a.SystemPrompt != "" {
-		a.History = append(a.History, llm.Message{Role: "system", Content: a.SystemPrompt})
+		a.History = append(a.History, llm.NewSystemMessage(a.SystemPrompt))
 	}
 
 	return a
@@ -67,7 +67,7 @@ func (a *Agent) Run(ctx context.Context, usrMsg string) (string, error) {
 
 	if usrMsg != "" {
 
-		userMessage := llm.Message{Role: "user", Content: usrMsg}
+		userMessage := llm.NewUserMessage(usrMsg)
 		a.History = append(a.History, userMessage)
 
 	}
@@ -92,7 +92,7 @@ func (a *Agent) Run(ctx context.Context, usrMsg string) (string, error) {
 	// extract the output and put it in var
 	assistantContent := resp.Choices[0].Message.Content
 
-	assistantMessage := llm.Message{Role: "assistant", Content: assistantContent}
+	assistantMessage := llm.NewAssistantMessage(assistantContent)
 	// obviously update the history
 	a.History = append(a.History, assistantMessage)
 	// return the thing assistant spat out or just nil
